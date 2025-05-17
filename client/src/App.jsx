@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 
 function App() {
-  const socket = useMemo(() => io("http://localhost:3000"), []);
+  const socket = useMemo(() => io("https://chat-application-xrmj.onrender.com/"), []);
 
   const [msg, setmsg] = useState("");
   const [room, setRoom] = useState("");
