@@ -26,17 +26,16 @@ import {
 } from "@mui/icons-material";
 
 function App() {
-<<<<<<< HEAD
+
   const socket = useMemo(() => io("https://chat-application-xrmj.onrender.com/"), []);
 
-  const [msg, setmsg] = useState("");
-=======
-  const socket = useMemo(() => io("http://localhost:3000/"), []);
+  
+
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [Createdid,setCreatedid]=useState("");
   const [msg, setMsg] = useState("");
->>>>>>> df8745a (Update: improved UI and backend logic)
+
   const [room, setRoom] = useState("");
   const [socketId, setSocketId] = useState("");
   const [messages, setMessages] = useState([
