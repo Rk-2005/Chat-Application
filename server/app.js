@@ -26,12 +26,13 @@ io.on("connection", (socket) => {
 
   socket.on("message",({msg,roomid})=>{
     console.log(msg + " from " + socket.id)
-   console.log(roomid);
-    io.to(roomid).emit("receive-msg",msg)
+   
+    io.to(roomid).emit("receive-msg", { msg, socketId: socket.id });
   })
 
   socket.on("specific-id",({msg,room})=>{
-    socket.to(room).emit("receive-msg",msg)
+    socket.to(room).emit("receive-msg",{msg})
+     
   })
   socket.on("join_room",({roomid})=>{
     console.log(roomid)
