@@ -12,7 +12,7 @@ const io = new Server(server, {
   cors: {
     origin: "*", // allow all origins or replace with frontend URL like "http://localhost:3000"
     methods: ["GET", "POST"],
-  }
+  },
 });
 
 const port = 3000;
@@ -22,27 +22,31 @@ app.get("/", (req, res) => {
 });
 
 io.on("connection", (socket) => {
-  console.log("User connected " +socket.id);
+  console.log("User connected " + socket.id);
 
-  socket.on("message",({msg,roomid})=>{
-    console.log(msg + " from " + socket.id)
-   
-    io.to(roomid).emit("receive-msg", { msg, socketId: socket.id });
-  })
+  socket.on("message", ({ msg, roomId }) => {
+    console.log(msg + " from " + socket.id);
 
-  socket.on("specific-id",({msg,room})=>{
-    socket.to(room).emit("receive-msg",{msg})
-     
-  })
-  socket.on("join_room",({roomid})=>{
-    console.log(roomid)
-    socket.join(roomid);
-  })
+    console.log(roomId);
+    io.to(roomId).emit("receive-msg", { msg, socketId: socket.id });
+  });
+  socket.on("typing", ({ roomId, user }) => {
+    socket.to(roomId).emit("show_typing", { user }); // Tell others in room
+  });
+  socket.on("stop_typing", ({ roomId }) => {
+    socket.to(roomId).emit("hide_typing"); // Tell others to remove typing
+  });
+  socket.on("specific-id", ({ msg, room }) => {
+    socket.to(room).emit("receive-msg", { msg });
+  });
+  socket.on("join_room", ({ roomId }) => {
+    console.log(roomId);
+    socket.join(roomId);
+  });
 
-  socket.on("disconnect",()=>{
-    console.log("User disconneted")
-  })
-
+  socket.on("disconnect", () => {
+    console.log("User disconneted");
+  });
 });
 
 server.listen(port, () => {
