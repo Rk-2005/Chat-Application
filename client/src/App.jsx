@@ -26,11 +26,11 @@ import {
 } from "@mui/icons-material";
 
 function App() {
-  // const socket = useMemo(
-  //   () => io("https://chat-application-xrmj.onrender.com/"),
-  //   []
-  // );
-  const socket = useMemo(() => io("http://localhost:3000/"), []);
+  const socket = useMemo(
+    () => io("https://chat-application-xrmj.onrender.com/"),
+    []
+  );
+ // const socket = useMemo(() => io("http://localhost:3000/"), []);
   const messageInputRef = useRef(null);
   const [typingTimeout, setTypingTimeout] = useState(null);
 
